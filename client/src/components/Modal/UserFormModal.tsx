@@ -28,11 +28,16 @@ const UserFormModal = (props: Props) => {
 
   return (
     <div
-      className={`flex justify-center w-full h-screen items-center z-10 opacity-75 bg-slate-500 fixed top-0 right-0 ${
+      className={`flex justify-center w-full h-screen items-center z-10 fixed top-0 right-0 ${
         isOpen ? "" : "hidden"
       }`}
     >
-      <div className="flex flex-col gap-1 w-[30%] h-[30%] justify-center border border-black rounded p-5 bg-white">
+      <div
+        className="fixed top-0 left-0 w-full h-full bg-black opacity-75"
+        onClick={onClose}
+      ></div>
+
+      <div className="flex flex-col gap-1 w-[30%] h-[30%] justify-center border border-black rounded p-5 bg-white z-20">
         <Button
           name="Close"
           className="border border-black bg-slate-300 p-2 rounded w-20"

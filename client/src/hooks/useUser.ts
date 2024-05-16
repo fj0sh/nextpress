@@ -3,9 +3,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Customer } from '@/interface/Customer';
 
-const base = "http://localhost:8080"
-
-
 const temp = axios.create({baseURL:'http://localhost:8080'})
 
 const useUser = () => {

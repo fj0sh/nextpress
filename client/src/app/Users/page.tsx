@@ -3,6 +3,7 @@ import { Button, UserFormModal } from "@/components";
 import useUser from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
 import { useXcontext } from "@/contexts";
+import Link from "next/link";
 
 const Users = () => {
   const { data, deleteUser } = useUser();
@@ -31,15 +32,7 @@ const Users = () => {
     setModalAction("add");
   };
 
-  // const { X, setX, mess } = useXcontext();
-
-  // const toggleContext = () => {
-  //   setX((prev: any) => !prev);
-  // };
-
-  // useEffect(() => {
-  //   console.log(X);
-  // }, [X]);
+  console.log(data);
 
   return (
     <div>
@@ -50,7 +43,6 @@ const Users = () => {
         onClose={() => closeModalToggle()}
       />
       <Button name="Add User" onClick={() => setAdd()} />
-      {/* <Button onClick={toggleContext}></Button> */}
       <table className="w-full border border-black border-collapse">
         <tbody>
           {data?.map((users) => (
@@ -61,7 +53,8 @@ const Users = () => {
               <td>{users.first_name}</td>
               <td>{users.last_name}</td>
               <td>{users.address}</td>
-              <td>
+
+              <td className="flex gap-3 justify-center">
                 <Button
                   name="Edit"
                   onClick={() => setUpdate(users.first_name)}
@@ -70,6 +63,9 @@ const Users = () => {
                   name="Delete"
                   onClick={() => deleteUser(users.first_name)}
                 />
+                <Link href={`Users/${users.customer_id}`}>
+                  <Button name="View"></Button>
+                </Link>
               </td>
             </tr>
           ))}
