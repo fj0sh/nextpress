@@ -3,29 +3,10 @@ import useUser from "@/hooks/useUser";
 import { useState, useCallback, useEffect } from "react";
 import { Customer } from "@/interface/Customer";
 import Link from "next/link";
+import useSearch from "@/hooks/useSearch";
 
 export default function Home() {
-  const { data } = useUser();
-  const [search, setSearch] = useState("");
-  const [isInputted, setIsInputted] = useState(false);
-  const [filteredUsers, setFilteredUsers] = useState<Customer[]>([]);
-
-  useEffect(() => {
-    const filteredData = data?.filter((user) => {
-      const userString =
-        `${user.first_name} ${user.last_name} ${user.address}`.toLowerCase();
-      const searchInput = search.toLowerCase();
-
-      return userString.includes(searchInput);
-    });
-    setFilteredUsers(filteredData || []);
-
-    if (search.length != 0) {
-      setIsInputted(true);
-    } else {
-      setIsInputted(false);
-    }
-  }, [data, search]);
+  const { setSearch, isInputted, filteredUsers } = useSearch();
 
   return (
     <div className="flex flex-col w-[25%]">
