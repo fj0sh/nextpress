@@ -1,23 +1,18 @@
-const conn = require("../config/dbConfig.js");
-// const express = require("express");
-// const app = express();
-
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
+const userModel = require("../model/userModel")
 
 exports.showAll = (req,res) =>{
-    conn.query("select * from customer", (err, result) => {
+    userModel.getAllCustomer((err, result) => {
         if (err) {
             console.error("Error:", err);
             res.status(500).send("error");
         }
-        console.log(result);  
+        console.log(result);
         res.status(200).json(result);
-    });
+    })
 };
 
 exports.showOne = (req, res) =>{
-    conn.query("call showCust(?)",req.params.id, (err, result) => {
+    userModel.getSingleCustomer(req.params.id, (err, result) => {
         if (err) {
             console.error("Error:", err);
             res.status(500).send("error");
@@ -27,21 +22,8 @@ exports.showOne = (req, res) =>{
     });
 };
 
-exports.deleteCust = (req, res) => {
-    conn.query("call deleteCustomer(?)", req.params.id, (err, result) =>{
-        if(err){
-            console.log(err);
-            res.status(500).send("error")
-        }
-        console.log(result);
-        res.status(201).json(result);
-    })
-}
-
 exports.addUser = (req, res) => {
-    const temp = req.body
-
-    conn.query(" insert into customer (first_name, last_name, address) values (?,?,?)", [temp.first_name, temp.last_name, temp.address], (err, result) => {
+    userModel.addCust(req.body, (err, result) => {
      if(err){
         console.log(err);
         res.status(500).send("error")
@@ -53,10 +35,8 @@ exports.addUser = (req, res) => {
 }
 
 exports.deleteUser = (req, res) => {
-    const temp = req.body
-
-    conn.query("CALL deleteCustomer(?)", [temp.first_name], (err, result) => {
-     if(err){
+    userModel.deleteCust(req.body.first_name, (err, result) =>{
+    if(err){
         console.log(err);
         res.status(500).send("error")
      }  
@@ -67,9 +47,7 @@ exports.deleteUser = (req, res) => {
 }
 
 exports.updateCustomer = (req, res) => {
-    const temp = req.body
-
-    conn.query("CALL updateCustomer(?,?,?,?)", [temp.first_name,temp.last_name,temp.address,temp.target], (err, result) => {
+    userModel.updateCust(req.body, (err, result) =>{       
         if(err){
            console.log(err);
            res.status(500).send("error")

@@ -1,27 +1,56 @@
 "use client";
-import { Button } from "@/components";
-import UserFormModal from "@/components/Modal/UserFormModal";
-import useModal from "@/hooks/useModal";
+import { Button, UserFormModal } from "@/components";
 import useUser from "@/hooks/useUser";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useXcontext } from "@/contexts";
 
 const Users = () => {
   const { data, deleteUser } = useUser();
-  const [show, setShow] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState<"add" | "edit" | undefined>(
+    undefined
+  );
+  const [editUser, setEditUser] = useState<string>();
 
-  const toggleAddModal = () => {
-    setShow((prev) => !prev);
+  const openModalToggle = () => {
+    setIsModalOpen(true);
   };
-  console.log(show);
 
-  const toggleEditModal = () => {
-    setShow((prev) => !prev);
+  const closeModalToggle = () => {
+    setIsModalOpen(false);
   };
+
+  const setUpdate = (users: any) => {
+    setEditUser(users);
+    openModalToggle();
+    setModalAction("edit");
+  };
+
+  const setAdd = () => {
+    openModalToggle();
+    setModalAction("add");
+  };
+
+  // const { X, setX, mess } = useXcontext();
+
+  // const toggleContext = () => {
+  //   setX((prev: any) => !prev);
+  // };
+
+  // useEffect(() => {
+  //   console.log(X);
+  // }, [X]);
 
   return (
     <div>
-      <UserFormModal open={show} />
-      <Button name="Add User" onClick={() => toggleAddModal()} />
+      <UserFormModal
+        isOpen={isModalOpen}
+        action={modalAction}
+        editedUser={editUser}
+        onClose={() => closeModalToggle()}
+      />
+      <Button name="Add User" onClick={() => setAdd()} />
+      {/* <Button onClick={toggleContext}></Button> */}
       <table className="w-full border border-black border-collapse">
         <tbody>
           {data?.map((users) => (
@@ -33,7 +62,10 @@ const Users = () => {
               <td>{users.last_name}</td>
               <td>{users.address}</td>
               <td>
-                <Button name="Edit" onClick={() => toggleEditModal()} />
+                <Button
+                  name="Edit"
+                  onClick={() => setUpdate(users.first_name)}
+                />
                 <Button
                   name="Delete"
                   onClick={() => deleteUser(users.first_name)}

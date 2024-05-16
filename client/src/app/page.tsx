@@ -1,9 +1,16 @@
 "use client";
 import { Button } from "@/components";
+import { useXcontext } from "@/contexts";
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export default function Home() {
-  return <div></div>;
+  const { X, mess } = useXcontext();
+
+  useEffect(() => {
+    console.log(X);
+  }, [X]);
+
+  return <div>{mess}</div>;
 }
