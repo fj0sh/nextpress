@@ -7,7 +7,9 @@ export default function Home() {
   const { setSearch, isInputted, filteredUsers, target, setTarget } =
     useCustomerSearch();
 
-  console.log(target);
+  useEffect(() => {
+    console.log(target);
+  }, [target]);
 
   return (
     <div className="flex flex-col w-[25%]">

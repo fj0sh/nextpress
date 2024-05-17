@@ -25,7 +25,7 @@ const useUser = () => {
                 last_name:lname,
                 address:add
             },{headers:{"Content-type":"application/json"}});
-            console.log(res.data);
+            console.log(res.data);  
         } catch (error) {
             console.log(error);
         }        
