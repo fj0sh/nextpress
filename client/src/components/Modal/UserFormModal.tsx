@@ -1,6 +1,8 @@
 import useUser from "@/hooks/useUser";
 import React, { useState } from "react";
 import Button from "../Buttons/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   isOpen?: boolean;
@@ -8,6 +10,8 @@ type Props = {
   action?: "add" | "edit";
   editedUser?: any;
 };
+
+const Error = () => toast.error("NO Input!!", { position: "top-center" });
 
 const UserFormModal = (props: Props) => {
   const { isOpen, onClose, action, editedUser } = props;
@@ -17,13 +21,16 @@ const UserFormModal = (props: Props) => {
   const [add, setAdd] = useState("");
 
   const handleSubmit = () => {
-    if (action === "add") {
-      addUser(fname, lname, add);
-    } else if (action === "edit") {
-      editUser(fname, lname, add, editedUser);
+    if (fname !== "" || lname !== "" || add !== "") {
+      if (action === "add") {
+        addUser(fname, lname, add);
+      } else if (action === "edit") {
+        editUser(fname, lname, add, editedUser);
+      }
+      onClose();
+    } else {
+      Error();
     }
-
-    onClose();
   };
 
   return (
@@ -32,11 +39,11 @@ const UserFormModal = (props: Props) => {
         isOpen ? "" : "hidden"
       }`}
     >
+      <ToastContainer />
       <div
         className="fixed top-0 left-0 w-full h-full bg-black opacity-75"
         onClick={onClose}
       ></div>
-
       <div className="flex flex-col gap-1 w-[30%] h-[30%] justify-center border border-black rounded p-5 bg-white z-20">
         <Button
           name="Close"

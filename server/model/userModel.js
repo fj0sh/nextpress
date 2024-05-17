@@ -21,3 +21,9 @@ exports. updateCust = (customerData, callback) => {
     const {first_name,last_name,address,target} = customerData;
     conn.query("CALL updateCustomer(?,?,?,?)", [first_name,last_name,address,target], callback)
 }
+
+
+// SELECT store.store_id, store.storeName, customer.customer_id 
+// FROM customer 
+// INNER JOIN store 
+// ON store.store_id = customer.store_id;

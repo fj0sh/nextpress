@@ -2,7 +2,7 @@
 import useUser from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
 
-const userDetails = ({ params }: { params: { userId: string } }) => {
+const UserDetails = ({ params }: { params: { userId: string } }) => {
   const { data } = useUser();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const userDetails = ({ params }: { params: { userId: string } }) => {
   return <div>{params.userId}</div>;
 };
 
-export default userDetails;
+export default UserDetails;

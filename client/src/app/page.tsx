@@ -1,15 +1,20 @@
 "use client";
-import useUser from "@/hooks/useUser";
-import { useState, useCallback, useEffect } from "react";
-import { Customer } from "@/interface/Customer";
 import Link from "next/link";
-import useSearch from "@/hooks/useSearch";
+import useCustomerSearch from "@/hooks/useCustomerSearch";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { setSearch, isInputted, filteredUsers } = useSearch();
+  const { setSearch, isInputted, filteredUsers, target, setTarget } =
+    useCustomerSearch();
+
+  console.log(target);
 
   return (
     <div className="flex flex-col w-[25%]">
+      <select name="" id="" onChange={(e) => setTarget(e.target.value)}>
+        <option value="store">Store</option>
+        <option value="customer">Customer</option>
+      </select>
       <input
         type="text"
         className="border border-black p-2 rounded-md"
