@@ -1,38 +1,30 @@
 "use client";
 import Link from "next/link";
-import useCustomerSearch from "@/hooks/useCustomerSearch";
+import useSearch from "@/hooks/useSearch";
 import { useEffect } from "react";
+import useProducts from "@/hooks/useProducts";
 
 export default function Home() {
-  const { setSearch, isInputted, filteredUsers, target, setTarget } =
-    useCustomerSearch();
+  const { setSearch, isInputted, filteredUsers } = useSearch();
+  const { productData } = useProducts();
 
   useEffect(() => {
-    console.log(target);
-  }, [target]);
+    console.log(productData);
+  }, [productData]);
 
   return (
-    <div className="flex flex-col w-[25%]">
-      <select name="" id="" onChange={(e) => setTarget(e.target.value)}>
-        <option value="store">Store</option>
-        <option value="customer">Customer</option>
-      </select>
-      <input
-        type="text"
-        className="border border-black p-2 rounded-md"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div
-        className={`border border-black shadow-lg z-10 ${
-          isInputted ? "" : "hidden"
-        }`}
-      >
-        {filteredUsers?.map((i) => (
-          <Link key={i.customer_id} href={`Users/${i.customer_id}`}>
-            <div>
-              {i.first_name} {i.last_name} {i.address}
-            </div>
-          </Link>
+    <div className="flex flex-col">
+      <div className="w-[25%]">
+        <input
+          type="text"
+          onChange={(e) => setSearch(e.target.value)}
+          className="border border-black"
+        />
+      </div>
+
+      <div>
+        {filteredUsers?.map((products) => (
+          <div key={products.product_id}>{products.product_name}</div>
         ))}
       </div>
     </div>
